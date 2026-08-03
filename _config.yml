@@ -4,6 +4,7 @@ remote_theme: "mmistakes/minimal-mistakes@4.28.0"
 baseurl: "/blog"
 url: "https://biczycki.github.io"
 repository: "biczycki/blog"
+include: ["_posts"]
 
 plugins:
   - jekyll-include-cache
