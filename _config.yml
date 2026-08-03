@@ -1,11 +1,12 @@
 title: "Meine persönliche Website"
-description: "Hier entsteht meine neue Seite."
-remote_theme: "mmistakes/minimal-mistakes@4.28.0"
-baseurl: "/blog"
-url: "https://biczycki.github.io"
-repository: "biczycki/blog"
-include: ["_posts"]
+description: "Hier entsteht mein YouTube Video Index."
+theme: minima
 
+# Wichtig für die korrekten Links auf GitHub Pages:
+baseurl: "/blog"
+url: "https://github.io"
+
+# Zeigt deine Blogbeiträge (Videos) direkt auf der Startseite an:
 plugins:
-  - jekyll-include-cache
-# WICHTIG: Die Zeilen mit 'plugins: jekyll-paginate' oder 'pagination:' komplett löschen!
+  - jekyll-feed
+
