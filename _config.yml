@@ -1,6 +1,6 @@
 title: "Meine persönliche Website"
 description: "Hier entsteht meine neue Seite."
-remote_theme: "mmistakes/minimal-mistakes"
+remote_theme: "mmistakes/minimal-mistakes@4.28.0"
 baseurl: "/blog"
 url: "https://biczycki.github.io"
 repository: "biczycki/blog"
