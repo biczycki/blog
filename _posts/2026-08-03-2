@@ -1,0 +1,11 @@
+---
+layout: single
+title: "Mein cooles YouTube Video"
+date: 2026-08-03
+header:
+  teaser: "https://youtube.com"
+---
+
+Hier bette ich mein Video ein:
+
+<iframe width="560" height="315" src="https://youtube.com" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
