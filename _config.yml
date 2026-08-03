@@ -1,17 +1,14 @@
 title: "Meine persönliche Website"
 description: "Hier entsteht meine neue Seite."
-
-# WICHTIG: Die Zeile "theme: minima" MUSS gelöscht werden, 
-# da remote_theme sonst ignoriert wird oder Fehler erzeugt!
 remote_theme: "mmistakes/minimal-mistakes"
-
-# Wenn dein Projekt unter github.io/blog läuft, ist das korrekt:
 baseurl: "/blog"
-url: "https://biczycki.github.io" # Passe dies an deinen echten GitHub-Namen an
-
-# Das löst den GitHub-Build-Fehler für externe Themes:
+url: "https://biczycki.github.io"
 repository: "biczycki/blog"
 
-# Erforderliches Plugin für das Minimal-Mistakes-Theme:
 plugins:
   - jekyll-include-cache
+  - jekyll-paginate # <-- Das aktiviert die Beitrags-Zählung
+
+# Diese Zeilen sagen dem Theme, wie viele Videos auf der Startseite landen:
+paginate: 10
+paginate_path: /page:num/
