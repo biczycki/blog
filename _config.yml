@@ -8,12 +8,4 @@ include: ["_posts"]
 
 plugins:
   - jekyll-include-cache
-  - jekyll-paginate-v2 # <-- WICHTIG: Version v2 nutzen!
-
-# Die neuen Einstellungen für das v2-Plugin:
-pagination:
-  enabled: true
-  per_page: 10
-  permalink: '/page/:num/'
-  sort_field: 'date'
-  sort_reverse: true
+# WICHTIG: Die Zeilen mit 'plugins: jekyll-paginate' oder 'pagination:' komplett löschen!
