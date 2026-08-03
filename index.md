@@ -1,6 +1,4 @@
 ---
 layout: home
+title: Willkommen auf meiner Website!
 ---
-
-# Willkommen auf meiner Website!
-Diese Seite wurde komplett im Browser bearbeitet.
