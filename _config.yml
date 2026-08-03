@@ -2,11 +2,10 @@ title: "Meine persönliche Website"
 description: "Hier entsteht mein YouTube Video Index."
 theme: minima
 
-# Wichtig für die korrekten Links auf GitHub Pages:
+# HIER KORRIGIEREN:
 baseurl: "/blog"
-url: "https://github.io"
+url: "https://biczycki.github.io" 
 
-# Zeigt deine Blogbeiträge (Videos) direkt auf der Startseite an:
 plugins:
   - jekyll-feed
 
