@@ -8,8 +8,12 @@ include: ["_posts"]
 
 plugins:
   - jekyll-include-cache
-  - jekyll-paginate # <-- Das aktiviert die Beitrags-Zählung
+  - jekyll-paginate-v2 # <-- WICHTIG: Version v2 nutzen!
 
-# Diese Zeilen sagen dem Theme, wie viele Videos auf der Startseite landen:
-paginate: 10
-paginate_path: /page:num/
+# Die neuen Einstellungen für das v2-Plugin:
+pagination:
+  enabled: true
+  per_page: 10
+  permalink: '/page/:num/'
+  sort_field: 'date'
+  sort_reverse: true
