@@ -1,7 +1,17 @@
-title: Mein Blog
-theme: minima
-baseurl: "/blog"
-url: "https://github.io"
+title: "Meine persönliche Website"
+description: "Hier entsteht meine neue Seite."
 
-# Diese Zeile löst den Fehler:
+# WICHTIG: Die Zeile "theme: minima" MUSS gelöscht werden, 
+# da remote_theme sonst ignoriert wird oder Fehler erzeugt!
+remote_theme: "mmistakes/minimal-mistakes"
+
+# Wenn dein Projekt unter github.io/blog läuft, ist das korrekt:
+baseurl: "/blog"
+url: "https://biczycki.github.io" # Passe dies an deinen echten GitHub-Namen an
+
+# Das löst den GitHub-Build-Fehler für externe Themes:
 repository: "biczycki/blog"
+
+# Erforderliches Plugin für das Minimal-Mistakes-Theme:
+plugins:
+  - jekyll-include-cache
