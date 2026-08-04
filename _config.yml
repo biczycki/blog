@@ -1,4 +1,4 @@
-title: "_config title"
+# title: "_config title"
 description: "_config description"
 theme: minima
 
@@ -10,4 +10,3 @@ plugins:
   - jekyll-feed
 
 future: true
-strip_title: true
