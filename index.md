@@ -1,6 +1,6 @@
 ---
 layout: home
-title: "index title"
+title: "aid4hate - wenn schon Judenhass, dann wenigstens mit Verstand"
 ---
 
 
