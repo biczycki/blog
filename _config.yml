@@ -10,3 +10,4 @@ plugins:
   - jekyll-feed
 
 future: true
+strip_title: true
