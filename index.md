@@ -1,6 +1,6 @@
 ---
 layout: home
-title: "Mein YouTube Video Index"
+title: "index title"
 ---
 
 
