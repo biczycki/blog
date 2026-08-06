@@ -27,7 +27,14 @@ let isSpeaking = false;
 
 function toggleSpeech() {
   const button = document.getElementById('tts-button');
-  
+  const articleElement = document.getElementById('article-content');
+
+  if (!articleElement) {
+    alert("Layout-Fehler: 'article-content' nicht gefunden.");
+    return;
+  }
+
+  // 1. WICHTIG: Wenn es bereits läuft, stoppen und resetten
   if (isSpeaking) {
     synth.cancel();
     button.innerText = "📄 Artikel vorlesen";
@@ -35,44 +42,64 @@ function toggleSpeech() {
     return;
   }
 
-  const articleText = document.getElementById('article-content').innerText;
+  // Radikaler Reset vor jedem neuen Start (löst Blockaden im Browser)
+  synth.cancel();
+
+  // 2. Text holen und von unsichtbaren Zeichen/Zeilenumbrüchen säubern
+  let articleText = articleElement.innerText
+    .replace(/\s+/g, ' ') // Ersetzt mehrfache Leerzeichen/Umbrüche durch ein einzelnes Leerzeichen
+    .trim();
+  
+  if (articleText.length === 0) {
+    alert("Kein Text vorhanden.");
+    return;
+  }
+
   utterance = new SpeechSynthesisUtterance(articleText);
+  utterance.lang = 'de-DE';
 
-  // --- STIMMEN-AUSWAHL START ---
-  // Alle auf dem Gerät verfügbaren Stimmen laden
-  const voices = synth.getVoices();
-  
-  // Liste bekannter männlicher deutscher Stimmen-Namen (Systemabhängig)
-  const maleVoiceNames = ['Stefan', 'Google Deutsch', 'Microsoft Stefan', 'Yannick', 'Markus'];
-  
-  // Suchen nach einer passenden deutschen, männlichen Stimme
-  let selectedVoice = voices.find(voice => 
-    voice.lang.startsWith('de') && 
-    maleVoiceNames.some(name => voice.name.includes(name))
-  );
+  // Stimmen-Auswahl
+  try {
+    const voices = synth.getVoices();
+    const maleVoiceNames = ['Stefan', 'Google Deutsch', 'Microsoft Stefan', 'Yannick', 'Markus'];
+    
+    let selectedVoice = voices.find(voice => 
+      voice.lang.startsWith('de') && 
+      maleVoiceNames.some(name => voice.name.includes(name))
+    );
 
-  // Falls keine explizit männliche gefunden wurde, nimm die erste deutsche Stimme als Backup
-  if (!selectedVoice) {
-    selectedVoice = voices.find(voice => voice.lang.startsWith('de'));
+    if (!selectedVoice) {
+      selectedVoice = voices.find(voice => voice.lang.startsWith('de'));
+    }
+
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+  } catch (e) {
+    console.log("Stimmen-Auswahl nicht möglich.");
   }
 
-  // Stimme dem Vorleser zuweisen
-  if (selectedVoice) {
-    utterance.voice = selectedVoice;
-  }
-  // --- STIMMEN-AUSWAHL ENDE ---
-
+  // Event-Handler
   utterance.onend = function() {
     button.innerText = "📄 Artikel vorlesen";
     isSpeaking = false;
   };
 
+  utterance.onerror = function(event) {
+    console.error("Fehler beim Vorlesen:", event.error);
+    // Wenn es trotz allem blockiert, erzwingen wir einen Reset
+    synth.cancel();
+    button.innerText = "📄 Artikel vorlesen";
+    isSpeaking = false;
+  };
+
+  // 3. Startbefehl absenden
   synth.speak(utterance);
   button.innerText = "⏹️ Vorlesen stoppen";
   isSpeaking = true;
 }
 
-// Wichtig für einige Browser (z.B. Chrome), damit die Stimmen vorab geladen werden
+// Stimmen im Hintergrund laden
 if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = synth.getVoices;
 }
