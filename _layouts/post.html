@@ -22,85 +22,97 @@ layout: default
 <!-- 5. Das JavaScript für die Vorlesefunktion -->
 <script>
 let synth = window.speechSynthesis;
-let utterance = null;
+let speechQueue = [];
+let currentQueueIndex = 0;
 let isSpeaking = false;
 
 function toggleSpeech() {
   const button = document.getElementById('tts-button');
   const articleElement = document.getElementById('article-content');
 
-  if (!articleElement) {
-    alert("Layout-Fehler: 'article-content' nicht gefunden.");
-    return;
-  }
+  if (!articleElement) return;
 
-  // 1. WICHTIG: Wenn es bereits läuft, stoppen und resetten
+  // Wenn es läuft -> Stoppen und alles zurücksetzen
   if (isSpeaking) {
     synth.cancel();
-    button.innerText = "📄 Artikel vorlesen";
-    isSpeaking = false;
+    resetTTS(button);
     return;
   }
 
-  // Radikaler Reset vor jedem neuen Start (löst Blockaden im Browser)
+  // Radikaler Reset vor dem Start
   synth.cancel();
 
-  // 2. Text holen und von unsichtbaren Zeichen/Zeilenumbrüchen säubern
-  let articleText = articleElement.innerText
-    .replace(/\s+/g, ' ') // Ersetzt mehrfache Leerzeichen/Umbrüche durch ein einzelnes Leerzeichen
-    .trim();
+  // Text holen und bereinigen
+  let rawText = articleElement.innerText.trim();
   
-  if (articleText.length === 0) {
-    alert("Kein Text vorhanden.");
+  // Text in Sätze zerlegen (trennt bei ., ! und ?)
+  // Schließt leere Einträge aus
+  speechQueue = rawText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 1);
+
+  if (speechQueue.length === 0) {
+    alert("Kein lesbarer Text gefunden.");
     return;
   }
 
-  utterance = new SpeechSynthesisUtterance(articleText);
-  utterance.lang = 'de-DE';
-
-  // Stimmen-Auswahl
-  try {
-    const voices = synth.getVoices();
-    const maleVoiceNames = ['Stefan', 'Google Deutsch', 'Microsoft Stefan', 'Yannick', 'Markus'];
-    
-    let selectedVoice = voices.find(voice => 
-      voice.lang.startsWith('de') && 
-      maleVoiceNames.some(name => voice.name.includes(name))
-    );
-
-    if (!selectedVoice) {
-      selectedVoice = voices.find(voice => voice.lang.startsWith('de'));
-    }
-
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
-  } catch (e) {
-    console.log("Stimmen-Auswahl nicht möglich.");
-  }
-
-  // Event-Handler
-  utterance.onend = function() {
-    button.innerText = "📄 Artikel vorlesen";
-    isSpeaking = false;
-  };
-
-  utterance.onerror = function(event) {
-    console.error("Fehler beim Vorlesen:", event.error);
-    // Wenn es trotz allem blockiert, erzwingen wir einen Reset
-    synth.cancel();
-    button.innerText = "📄 Artikel vorlesen";
-    isSpeaking = false;
-  };
-
-  // 3. Startbefehl absenden
-  synth.speak(utterance);
-  button.innerText = "⏹️ Vorlesen stoppen";
+  currentQueueIndex = 0;
   isSpeaking = true;
+  button.innerText = "⏹️ Vorlesen stoppen";
+
+  // Erste Zeile sprechen
+  playNextChunk(button);
 }
 
-// Stimmen im Hintergrund laden
+function playNextChunk(button) {
+  if (currentQueueIndex >= speechQueue.length) {
+    resetTTS(button);
+    return;
+  }
+
+  let textToSpeak = speechQueue[currentQueueIndex];
+
+  // Sicherheits-Filter: Ignoriere reine hebräische/fremde Zeichenblöcke im Satz
+  // Erlaubt lateinische Buchstaben, Zahlen und deutsche Umlaute
+  if (!/[a-zA-Z0-9äöüÄÖÜß]/.test(textToSpeak)) {
+    currentQueueIndex++;
+    playNextChunk(button);
+    return;
+  }
+
+  let utterance = new SpeechSynthesisUtterance(textToSpeak);
+  utterance.lang = 'de-DE';
+
+  // Männliche Stimme suchen
+  const voices = synth.getVoices();
+  const maleVoiceNames = ['Stefan', 'Google Deutsch', 'Microsoft Stefan', 'Yannick', 'Markus'];
+  let selectedVoice = voices.find(voice => voice.lang.startsWith('de') && maleVoiceNames.some(name => voice.name.includes(name)));
+  if (!selectedVoice) selectedVoice = voices.find(voice => voice.lang.startsWith('de'));
+  if (selectedVoice) utterance.voice = selectedVoice;
+
+  // Wenn dieser Satz fertig ist -> den nächsten abspielen
+  utterance.onend = function() {
+    currentQueueIndex++;
+    playNextChunk(button);
+  };
+
+  // Fehler-Absicherung für den einzelnen Satz
+  utterance.onerror = function(e) {
+    console.warn("Satz-Fehler übersprungen:", e.error);
+    currentQueueIndex++;
+    playNextChunk(button);
+  };
+
+  synth.speak(utterance);
+}
+
+function resetTTS(button) {
+  button.innerText = "📄 Artikel vorlesen";
+  isSpeaking = false;
+  speechQueue = [];
+  currentQueueIndex = 0;
+}
+
 if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = synth.getVoices;
 }
 </script>
+
