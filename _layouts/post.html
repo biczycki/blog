@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<article class="post">
+  
+  <!-- 1. Der Titel des Blogposts -->
+  <h1>{{ page.title }}</h1>
+  
+  <!-- 2. Das Datum -->
+  <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d.%m.%Y" }}</time></p>
+
+  <!-- 3. Unser Vorlese-Button (wird auf JEDER Seite angezeigt) -->
+  <button id="tts-button" onclick="toggleSpeech()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; margin-bottom: 20px;">📄 Artikel vorlesen</button>
+
+  <!-- 4. WICHTIG: Das umschließende Div für den Inhalt -->
+  <div id="article-content" class="post-content">
+    {{ content }}
+  </div>
+
+</article>
+
+<!-- 5. Das JavaScript für die Vorlesefunktion -->
+<script>
+let synth = window.speechSynthesis;
+let utterance = null;
+let isSpeaking = false;
+
+function toggleSpeech() {
+  const button = document.getElementById('tts-button');
+  
+  if (isSpeaking) {
+    synth.cancel();
+    button.innerText = "📄 Artikel vorlesen";
+    isSpeaking = false;
+    return;
+  }
+
+  // Greift sich nur den Text, der innerhalb von #article-content liegt
+  const articleText = document.getElementById('article-content').innerText;
+  
+  utterance = new SpeechSynthesisUtterance(articleText);
+  utterance.lang = 'de-DE';
+
+  utterance.onend = function() {
+    button.innerText = "📄 Artikel vorlesen";
+    isSpeaking = false;
+  };
+
+  synth.speak(utterance);
+  button.innerText = "⏹️ Vorlesen stoppen";
+  isSpeaking = true;
+}
+</script>
