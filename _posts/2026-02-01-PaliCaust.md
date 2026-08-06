@@ -1,3 +1,15 @@
+---
+layout: post
+title: "PaliCaust"
+date: 2025-02-06
+author: "T. Dominik Biczycki"
+categories: [ProSemitischer Blog]
+tags: [Antisemitismus, Berlin, Palästina]
+description: "אל נלך כצאן לטבח - Lasst uns nicht wie Schafe zur Schlachtbank gehen."
+image: "/pics/blog.jpg"
+published: true
+---
+
 Ich bin ja Komiker, Satiriker um genau zu sein. Vieles was ich sage, ist nicht ernst gemeint, ist nur Quatsch um lustig zu sein. Aber noch mehr Quatsch als ich redet der israelische Ministerpräsident Benjamin Netanjahu. 
 Der hatte nämlich behauptet, die Palästinenser hätten Hitler den Holocaust eingeredet. Das ist natürlich ausgemachter Unsinn. Der Holocaust ist eine rein deutsche Angelegenheit. Und wenn einer den anderen zum Juden-töten inspirierte, dann nicht die Araber die Deutschen, sondern genau umgekehrt. 
 In Wirklichkeit war es nämlich so: Über Jahrhunderte gehörte der gesamte Nahe Osten den Türken. Und dann kam Lorenz von Arabien, vertrieb die Türken und die ganze Gegend, auch das, was man Palästina nennt, wurde britisch. Nun nannte man aber die Menschen, die dort lebten, nicht Engländer, sondern Palästinenser. Egal ob es Juden, Christen oder Araber waren. Logisch, oder? Um sie zu unterscheiden, sprach man von jüdischen Palästinensern, christlichen Palästinensern und arabischen Palästinensern.
