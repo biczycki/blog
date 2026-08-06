@@ -35,11 +35,32 @@ function toggleSpeech() {
     return;
   }
 
-  // Greift sich nur den Text, der innerhalb von #article-content liegt
   const articleText = document.getElementById('article-content').innerText;
-  
   utterance = new SpeechSynthesisUtterance(articleText);
-  utterance.lang = 'de-DE';
+
+  // --- STIMMEN-AUSWAHL START ---
+  // Alle auf dem Gerät verfügbaren Stimmen laden
+  const voices = synth.getVoices();
+  
+  // Liste bekannter männlicher deutscher Stimmen-Namen (Systemabhängig)
+  const maleVoiceNames = ['Stefan', 'Google Deutsch', 'Microsoft Stefan', 'Yannick', 'Markus'];
+  
+  // Suchen nach einer passenden deutschen, männlichen Stimme
+  let selectedVoice = voices.find(voice => 
+    voice.lang.startsWith('de') && 
+    maleVoiceNames.some(name => voice.name.includes(name))
+  );
+
+  // Falls keine explizit männliche gefunden wurde, nimm die erste deutsche Stimme als Backup
+  if (!selectedVoice) {
+    selectedVoice = voices.find(voice => voice.lang.startsWith('de'));
+  }
+
+  // Stimme dem Vorleser zuweisen
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+  // --- STIMMEN-AUSWAHL ENDE ---
 
   utterance.onend = function() {
     button.innerText = "📄 Artikel vorlesen";
@@ -49,5 +70,10 @@ function toggleSpeech() {
   synth.speak(utterance);
   button.innerText = "⏹️ Vorlesen stoppen";
   isSpeaking = true;
+}
+
+// Wichtig für einige Browser (z.B. Chrome), damit die Stimmen vorab geladen werden
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = synth.getVoices;
 }
 </script>
