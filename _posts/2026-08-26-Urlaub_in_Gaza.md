@@ -6,11 +6,11 @@ author: "T. Dominik Biczycki"
 categories: [ProSemitischer Blog]
 tags: [Antisemitismus, Berlin, Palästina]
 description: "אל נלך כצאן לטבח - Lasst uns nicht wie Schafe zur Schlachtbank gehen."
-image: "pics/gaza.jpg"
+image: "/blog/pics/gaza.jpg"
 published: true
 ---
 
-![Gaza - die Riviera des Nahen Ostens](pics/gaza.jpg)
+![Gaza - die Riviera des Nahen Ostens](/blog/pics/gaza.jpg)
 
 
 Sehen Sie wie braun ich bin?
