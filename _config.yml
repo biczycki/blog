@@ -1,12 +1,14 @@
-title: ""
+title: "Mein Pro-Semitischer Blog"
 description: "Wenn schon Judenhass, dann bitte ohne Stuss!"
 
-theme: jekyll-theme-slate
+# Korrekte Einbindung für das Slate-Theme auf GitHub Pages:
+remote_theme: pages-themes/slate@v0.2.0
 
 baseurl: "/blog"
 url: "https://biczycki.github.io" 
 
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
 
 future: true
