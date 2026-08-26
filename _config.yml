@@ -1,11 +1,11 @@
 title: "Mein Pro-Semitischer Blog"
 description: "Wenn schon Judenhass, dann bitte ohne Stuss!"
 
-# Ein offiziell unterstütztes Theme (benötigt kein Plugin)
-theme: jekyll-theme-slate
+# Das stabilste Standard-Theme für Beitragslisten verwenden
+theme: minima
 
 baseurl: "/blog"
-url: "https://biczycki.github.io" 
+url: "https://github.io" 
 
 plugins:
   - jekyll-feed
