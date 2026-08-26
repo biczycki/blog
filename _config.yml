@@ -1,8 +1,8 @@
 title: ""
-description: "Wenn schon Judenhass, dann aber ohne Stuss!"
-theme: minima
+description: "Wenn schon Judenhass, dann bitte ohne Stuss!"
 
-# HIER KORRIGIEREN:
+theme: jekyll-theme-slate
+
 baseurl: "/blog"
 url: "https://biczycki.github.io" 
 
