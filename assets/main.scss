@@ -1,0 +1,8 @@
+---
+---
+@import "minima";
+
+// Blendet die automatische Überschrift "Posts" auf der Startseite aus
+.post-list-heading {
+    display: none !important;
+}
